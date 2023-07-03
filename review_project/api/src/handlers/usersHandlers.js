@@ -1,5 +1,7 @@
 const getUserHandler = (req, res) => {
-  res.send("NIY: Esta Ruta trae La Info de todos los Usiarios");
+  const { name } = req.query;
+  if (name) res.send(`Quiero buscar todos los que se llamen ${name}`);
+  else res.send("Quiero enviar todos los usuarios");
 };
 
 const getUsersHandler = (req, res) => {
@@ -8,7 +10,12 @@ const getUsersHandler = (req, res) => {
 };
 
 const createUsersHandler = (req, res) => {
-  res.send("NIY: Esta Ruta crea un nuevo usuario");
+  const { name, email, phone } = req.body;
+  res.send(`Estoy por crear un usuario con estos datos:
+    name: ${name},
+    email:${email},
+    phone:${phone} 
+  `);
 };
 
 module.exports = {
