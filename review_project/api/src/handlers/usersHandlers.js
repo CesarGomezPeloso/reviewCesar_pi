@@ -1,14 +1,22 @@
-const { createUser } = require("../controllers/usersController");
+const { createUser, getUserById, getAllUsers, searchUserByName 
+} = require("../controllers/usersController");
 
-const getUserHandler = (req, res) => {
+const getUserHandler = async(req, res) => {
   const { name } = req.query;
-  if (name) res.send(`Quiero buscar todos los que se llamen ${name}`);
-  else res.send("Quiero enviar todos los usuarios");
+
+  const results= name? await searchUserByName(name) : await getAllUsers();
+  res.status(200).json(results);
 };
 
-const getUsersHandler = (req, res) => {
+const getUsersHandler = async (req, res) => {
   const { id } = req.params;
-  res.send(`Envia el detalle del usuario por ID ${id}`);
+  const source = isNaN(id) ? "bdd" : "api";
+  try {
+    const user = await getUserById(id, source);
+    res.status(200).json(user);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 const createUsersHandler = async (req, res) => {
