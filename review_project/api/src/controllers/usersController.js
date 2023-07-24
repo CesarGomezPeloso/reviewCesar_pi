@@ -1,4 +1,4 @@
-const { User } = require("../db");
+const { User, Post } = require("../db");
 const axios = require("axios");
 
 const cleanArray = (arr) =>
@@ -20,7 +20,12 @@ const getUserById = async (id, source) => {
     source === "api"
       ? (await axios.get(`https://jsonplaceholder.typicode.com/users/${id}`))
           .data
-      : await User.findByPk(id);
+      : await User.findByPk(id, {
+          include: {
+            model: Post,
+            attributes: ["title", "body"],
+          },
+        });
   return user;
 };
 
