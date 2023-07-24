@@ -1,3 +1,5 @@
+const { createUser } = require("../controllers/usersController");
+
 const getUserHandler = (req, res) => {
   const { name } = req.query;
   if (name) res.send(`Quiero buscar todos los que se llamen ${name}`);
@@ -9,13 +11,14 @@ const getUsersHandler = (req, res) => {
   res.send(`Envia el detalle del usuario por ID ${id}`);
 };
 
-const createUsersHandler = (req, res) => {
-  const { name, email, phone } = req.body;
-  res.send(`Estoy por crear un usuario con estos datos:
-    name: ${name},
-    email:${email},
-    phone:${phone} 
-  `);
+const createUsersHandler = async (req, res) => {
+  try {
+    const { name, email, phone } = req.body;
+    const newUser = await createUser(name, email, phone);
+    res.status(201).json(newUser);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 };
 
 module.exports = {
