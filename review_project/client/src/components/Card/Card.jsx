@@ -1,10 +1,9 @@
-const Card = () => {
+const Card = (porps) => {
   return (
     <div>
-      <p>
-        Este componente debe mostrar... la info de cada Usuario mapeado, pero
-        ademas, darnos un link para ir al detalle del usuario en cuestion
-      </p>
+      <p>Name: {porps.name}</p>
+      <p>Email: {porps.email}</p>
+      <p>Phone: {porps.phone}</p>
     </div>
   );
 };
