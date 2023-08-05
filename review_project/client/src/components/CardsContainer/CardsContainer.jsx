@@ -1,4 +1,5 @@
 import Card from "../Card/Card";
+import style from "./CardsContainer.module.css";
 
 const CardsContainer = () => {
   const users = [
@@ -88,14 +89,16 @@ const CardsContainer = () => {
     },
   ];
   return (
-    <div>
+    <div className={style.container}>
       {users.map((users) => {
-        return <Card 
-          id={users.id}
-          name={users.name}
-          email={users.email}
-          phone={users.phone}
-        />;
+        return (
+          <Card
+            id={users.id}
+            name={users.name}
+            email={users.email}
+            phone={users.phone}
+          />
+        );
       })}
     </div>
   );
